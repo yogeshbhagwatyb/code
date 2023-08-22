@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', selectedValue: 'DEFAULT', defaultValue: 'main', name: 'BRANCH', type: 'PT_BRANCH'
+    }
+
+    stages {
+        stage('Hello') {
+            steps {
+                checkout scmGit(branches: [[name: "${params.BRANCH}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/yogeshbhagwatyb/jenkins.git']])
+            }
+        }
+        stage('copyoperation') {
+            steps {
+            sh 'scp $HOME/workspace/${JOB_NAME}/* ${ENV}:/home/ubuntu'
+            }
+            
+        }
+    }
+}

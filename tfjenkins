@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    stages {
+        stage('Hello') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'gitgub_cred', url: 'https://github.com/mayurmadan/yogesh.git']])
+                
+            }
+        }
+        stage ('terraforminit'){
+            steps {
+            sh 'terraform init'
+            sh 'terraform destroy --auto-approve'
+           // sh 'terraform plan --input=false --auto-approve'
+           sh 'terraform plan'
+           sh 'terraform apply --auto-approve'
+           sleep 300
+           sh 'terraform destroy --auto-approve'
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+pipeline {
+    agent any
+    stages {
+        stage('Hello') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'gitgub_cred', url: 'https://github.com/mayurmadan/yogesh.git']])
+                
+            }
+        }
+        stage ('terraforminit'){
+            steps {
+            sh 'terraform init'
+            sh 'terraform destroy --auto-approve'
+           // sh 'terraform plan --input=false --auto-approve'
+           sh 'terraform plan'
+           sh 'terraform apply --auto-approve'
+           sleep 300
+           sh 'terraform destroy --auto-approve'
+            }
+        }
+    }
+}
+
